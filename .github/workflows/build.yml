@@ -9,7 +9,12 @@
 #  Contributors:
 #    Red Hat, Inc. - initial API and implementation
 name: Docker
-on: [pull_request, push]
+#on: [pull_request, push]
+on:
+  push:
+    branches: [ actions-ci ]
+  pull_request:
+    branches: [ actions-ci ]
 jobs:
 
   build:
