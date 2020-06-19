@@ -19,13 +19,16 @@ ENV PATH=/opt/rh/go-toolset-1.13/root/usr/bin:${PATH} \
 
 USER root
 ADD . /che-operator
+
+RUN case $(uname -m) in \
+       x86_64) ARCH="amd64" ;; \
+       s390x) ARCH="s390x";; \
+       ppc64le) ARCH="ppc64le";; \
+esac
+
 WORKDIR /che-operator
 
-RUN export ARCH="$(uname -m)"
-RUN echo $ARCH
-RUN if [[ ${ARCH} == "x86_64" ]]; then export ARCH="amd64"; fi
-RUN export MOCK_API=true && go test -mod=vendor -v ./... && \
-    GOOS=linux GOARCH=$ARCH CGO_ENABLED=0 go build -mod=vendor -o /tmp/che-operator/che-operator cmd/manager/main.go
+RUN export MOCK_API=true && go test -mod=vendor -v ./... && GOOS=linux GOARCH=$ARCH CGO_ENABLED=0 go build -mod=vendor -o /tmp/che-operator/che-operator cmd/manager/main.go
 
 # https://access.redhat.com/containers/?tab=tags#/registry.access.redhat.com/ubi8-minimal
 FROM registry.access.redhat.com/ubi8-minimal:8.2-267
