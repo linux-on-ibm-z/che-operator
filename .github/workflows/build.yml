@@ -23,4 +23,4 @@ jobs:
       with:
         buildx-version: latest
     - name: Build the Docker image
-      run: docker buildx build --platform linux/amd64 .
+      run: docker buildx build --platform linux/amd64,linux/s390x .
