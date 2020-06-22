@@ -28,7 +28,7 @@ esac
 
 WORKDIR /che-operator
 
-RUN export MOCK_API=true && go test -mod=vendor -v ./... && GOOS=linux GOARCH=$ARCH CGO_ENABLED=0 go build -mod=vendor -o /tmp/che-operator/che-operator cmd/manager/main.go
+RUN export MOCK_API=true && GOOS=linux GOARCH=$ARCH CGO_ENABLED=0 go test -mod=vendor -v ./... && GOOS=linux GOARCH=$ARCH CGO_ENABLED=0 go build -mod=vendor -o /tmp/che-operator/che-operator cmd/manager/main.go
 
 # https://access.redhat.com/containers/?tab=tags#/registry.access.redhat.com/ubi8-minimal
 FROM registry.access.redhat.com/ubi8-minimal:8.2-267
