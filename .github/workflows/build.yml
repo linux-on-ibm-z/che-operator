@@ -19,7 +19,7 @@ jobs:
     - name: Checkout che-dashboard-next source code
       uses: actions/checkout@v2
     - name: Docker Buildx
-      uses: crazy-max/ghaction-docker-buildx@v3
+      uses: crazy-max/ghaction-docker-buildx@v3.2.0
       with:
         buildx-version: v0.4.1
         qemu-version: 4.2.0-7
