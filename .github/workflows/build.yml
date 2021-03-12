@@ -25,14 +25,15 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v2
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Build images
-      uses: docker/build-push-action@v2
+      uses: crazy-max/ghaction-docker-buildx@v3
       with:
-        file: Dockerfile
-        platforms: linux/amd64,linux/ppc64le,linux/s390x
-        tags: quay.io/eclipse/che-operator:nightly
-        push: false
+        buildx-version: latest
+        qemu-version: latest
+    - name: Build images
+      run: |
+        docker buildx build \
+        --platform linux/amd64,linux/ppc64le,linux/s390x \
+        --output "type=image,push=false" \
+        --tag quay.io/eclipse/che-operator:nightly \
+        --file ./Dockerfile .
