@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: Checkout source code
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
     - name: Set up Docker Buildx
@@ -33,5 +33,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         file: Dockerfile
-        platforms: linux/amd64,linux/ppc64le
+        platforms: linux/amd64,linux/ppc64le,linux/s390x
         tags: quay.io/eclipse/che-operator:nightly
+        push: false
